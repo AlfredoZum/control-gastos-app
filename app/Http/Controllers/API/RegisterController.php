@@ -47,14 +47,26 @@ class RegisterController extends BaseController
    */
   public function login(Request $request): JsonResponse
   {
+    
     // return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+      
       $user = Auth::user();
+      
       $success['token'] =  $user->createToken('api token')->accessToken;
-      $success['name'] =  $user->name;
+      // $success['name'] =  $user->name;
+      $customerUser = (object) [
+        'id' => $user->id,
+        'name' => $user->name,
+        'email' => $user->email,
+        'type' => $user->type,
+        'rfc' => $user->rfc,
+      ];
+      $success['user'] = $customerUser;
 
       return $this->sendResponse($success, 'User login successfully.');
     } else {
+      dd("aqui 2");
       return $this->sendError($request, ['error' => 'Unauthorised']);
     }
   }

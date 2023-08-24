@@ -20,7 +20,9 @@ return new class extends Migration
             $table->decimal('total', 8, 2);
             $table->boolean('invoiced')->default(false);
             $table->unsignedBigInteger('supplier_id');
-            $table->foreign('supplier_id')->references('id')->on('supplier');
+            $table->foreign('supplier_id')->references('id')->on('supplier')->nullable();
+            $table->unsignedBigInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customer')->nullable();
             $table->unsignedBigInteger('movement_type_id');
             $table->foreign('movement_type_id')->references('id')->on('movement_type');
             $table->unsignedBigInteger('way_pay_id');

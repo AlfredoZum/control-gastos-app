@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\API\MovementController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,6 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::post('login', [RegisterController::class, 'login']);
 
 Route::post('/login', 'App\Http\Controllers\API\RegisterController@login');
+
+
+ 
+Route::resource('movement', MovementController::class);
 
 
 
