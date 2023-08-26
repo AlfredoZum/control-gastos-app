@@ -19,10 +19,10 @@ return new class extends Migration
             $table->date('date');
             $table->decimal('total', 8, 2);
             $table->boolean('invoiced')->default(false);
-            $table->unsignedBigInteger('supplier_id');
-            $table->foreign('supplier_id')->references('id')->on('supplier')->nullable();
-            $table->unsignedBigInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customer')->nullable();
+            $table->unsignedBigInteger('supplier_id')->nullable();
+            $table->foreign('supplier_id')->references('id')->on('supplier');
+            $table->unsignedBigInteger('customer_id')->nullable();
+            $table->foreign('customer_id')->references('id')->on('customer');
             $table->unsignedBigInteger('movement_type_id');
             $table->foreign('movement_type_id')->references('id')->on('movement_type');
             $table->unsignedBigInteger('way_pay_id');
@@ -32,6 +32,7 @@ return new class extends Migration
             $table->unsignedBigInteger('egress_movement_classification_id');
             $table->foreign('egress_movement_classification_id')->references('id')->on('egress_movement_classification');
             $table->string('nota')->nullable();
+            $table->string('invoice_path')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
