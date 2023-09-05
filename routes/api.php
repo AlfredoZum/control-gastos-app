@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Route::post('login', [RegisterController::class, 'login']);
 
-Route::post('/login', 'App\Http\Controllers\API\RegisterController@login');
+Route::post('/v1/auth/login', 'App\Http\Controllers\API\RegisterController@login');
 
 
 Route::get('movement/{userId}', [MovementController::class, 'index']);

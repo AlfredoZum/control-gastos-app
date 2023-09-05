@@ -23,9 +23,9 @@ class MovementController extends Controller
   {
     try {
      
-      $a = Movement::getMovementByUser($userId);
-      dd($a);
-      $movements = Movement::where('user_id', $userId)->get();
+      $movements = Movement::getMovementByUser($userId);
+      // dd($a);
+      // $movements = Movement::where('user_id', $userId)->get();
 
       $data = [
         'movements' => $movements,

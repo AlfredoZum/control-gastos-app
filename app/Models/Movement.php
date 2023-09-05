@@ -16,10 +16,22 @@ class Movement extends Model
   public static function getMovementByUser($userId)
   {
     try {
-      $movements = DB::table('movement')
-        ->join('movement_type', 'movement.movement_type_id', '=', 'movement_type.id')
-        ->select('movement.*', 'movement_type.name AS movement_type_name')
-        ->where('user_id', $userId)
+      $movements = DB::table('movement as m')
+        ->join('movement_type as mt', 'm.movement_type_id', '=', 'mt.id')
+        ->join('way_pay as wp', 'm.way_pay_id', '=', 'wp.id')
+        ->join('income_movement_classification as imc', 'm.income_movement_classification_id', '=', 'imc.id')
+        ->join('egress_movement_classification as emc', 'm.egress_movement_classification_id', '=', 'emc.id')
+        ->leftJoin('supplier as s', 'm.supplier_id', '=', 's.id')
+        ->leftJoin('customer as c', 'm.customer_id', '=', 's.id')
+        ->select('m.*', 
+          'mt.name AS movement_type_name', 
+          'wp.name AS way_pay_name', 
+          'imc.name as income_movement_classification_name', 
+          'emc.name as egress_movement_classification_name',
+          's.name as supplier_name',
+          'c.name as customer_name'
+        )
+        ->where('m.user_id', $userId)
         ->get();
       return [
         "code"      => 200,
@@ -28,6 +40,7 @@ class Movement extends Model
       // $reserve = CoverModel::find($coverId)->delete();
     } catch (\Throwable $th) {
       //throw $th;
+      dd($th);
       return back()->with('message', __('messages.errorDeleteCover'));
     }
   }
